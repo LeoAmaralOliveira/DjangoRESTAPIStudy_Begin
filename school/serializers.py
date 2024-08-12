@@ -1,11 +1,32 @@
 from rest_framework import serializers
 from school.models import Student, Course, Registration
+from school.validators import (
+    invalid_cpf, invalid_name, invalid_cellphone
+)
 
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
+
+    def validate(self, data):
+        if invalid_cpf(data["cpf"]):
+            raise serializers.ValidationError({
+                "cpf": "CPF must be valid"
+            })
+
+        if invalid_name(data["name"]):
+            raise serializers.ValidationError({
+                "name": "Name must only contain letters"
+            })
+
+        if invalid_cellphone(data["cellphone"]):
+            raise serializers.ValidationError({
+                "cellphone": "Cellphone must follow the model: 99 99999-9999"
+            })
+
+        return data
 
 
 class CourseSerializer(serializers.ModelSerializer):
