@@ -59,3 +59,22 @@ class ListRegistrationsCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registration
         fields = ['student_name']
+
+
+class StudentSerializerV2(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id', 'name', 'email', 'cellphone']
+
+    def validate(self, data):
+        if invalid_name(data["name"]):
+            raise serializers.ValidationError({
+                "name": "Name must only contain letters"
+            })
+
+        if invalid_cellphone(data["cellphone"]):
+            raise serializers.ValidationError({
+                "cellphone": "Cellphone must follow the model: 99 99999-9999"
+            })
+
+        return data
