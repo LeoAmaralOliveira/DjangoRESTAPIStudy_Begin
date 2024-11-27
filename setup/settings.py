@@ -153,6 +153,6 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8042",  # Front-End Application
-    "http://127.0.0.1:8042",  # Front-End Application
+    "http://localhost:8042",  # FrontEnd Application
+    "http://127.0.0.1:8042",  # FrontEnd Application
 ]
